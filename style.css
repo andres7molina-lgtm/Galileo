@@ -1,1 +1,459 @@
-:root{font-family:system-ui,-apple-system,sans-serif;color:#1b2b47;background:#edf3fb}*{box-sizing:border-box}body{margin:0}main{max-width:800px;margin:24px auto;padding:24px;background:white;border-radius:22px;box-shadow:0 10px 40px #142b4b1c}.brand{font-size:30px;font-weight:800;color:#174e9a}.brand span{color:#26a5c7}header p{color:#53627b;margin:4px 0 22px}.topics,.controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}button{cursor:pointer;border:0;border-radius:11px;background:#185cb4;color:white;padding:12px 15px;font-weight:600}.topics button{background:#e9f3ff;color:#164b86}button:disabled{opacity:.5;cursor:not-allowed}#chat{border:1px solid #dbe6f4;background:#f9fbff;border-radius:16px;height:48vh;min-height:280px;overflow:auto;padding:15px;display:flex;flex-direction:column;gap:12px}.bubble{max-width:88%;padding:13px 16px;border-radius:16px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.bot{background:#e6f1ff;align-self:flex-start}.student{background:#ddf4e8;align-self:flex-end}form{margin-top:16px}form label{font-size:13px;color:#53627b}.input-row{display:flex;gap:8px;margin-top:6px}#message{min-width:0;flex:1;border:1px solid #b8c8db;border-radius:10px;padding:12px;font-size:16px}.controls{align-items:center}.controls label{font-size:14px}#status{font-size:13px;color:#4c617b;min-height:20px}footer{font-size:12px;color:#67758b;margin-top:12px}@media(max-width:600px){main{margin:0;min-height:100dvh;border-radius:0;padding:16px}#chat{height:50dvh}.bubble{max-width:96%}}
+:root{
+font-family:system-ui,-apple-system,sans-serif;
+color:#eaf8ff;
+background:#020814;
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+min-height:100vh;
+background:
+radial-gradient(circle at 50% 0%,rgba(0,153,255,.18),transparent 38%),
+linear-gradient(180deg,#020814,#061426);
+}
+
+main{
+width:min(920px,calc(100% - 28px));
+margin:20px auto;
+padding:24px;
+background:rgba(4,15,30,.86);
+border:1px solid rgba(40,190,255,.18);
+border-radius:24px;
+box-shadow:0 22px 70px rgba(0,0,0,.42);
+}
+
+header{
+text-align:center;
+}
+
+.brand{
+font-size:30px;
+font-weight:900;
+letter-spacing:4px;
+color:#f3fdff;
+text-shadow:0 0 12px rgba(77,219,255,.8);
+}
+
+.brand span{
+color:#32d6ff;
+}
+
+.subtitle{
+color:#8eb5cf;
+margin-top:6px;
+}
+
+/* NÚCLEO GALILEO */
+
+.galileo-hud{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:14px;
+min-height:250px;
+background:
+radial-gradient(circle,rgba(0,190,255,.12),transparent 60%);
+}
+
+.galileo-orb{
+position:relative;
+width:220px;
+height:220px;
+min-width:220px;
+padding:0;
+border:none;
+border-radius:50%;
+background:transparent;
+-webkit-tap-highlight-color:transparent;
+}
+
+.galileo-core{
+position:absolute;
+inset:47px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:
+radial-gradient(circle,#0b2942,#04101f 56%,#000);
+border:3px solid #27d9ff;
+box-shadow:
+0 0 13px #0fdcff,
+0 0 35px rgba(0,145,255,.72),
+inset 0 0 28px rgba(0,174,255,.35);
+z-index:5;
+}
+
+.galileo-name{
+color:#f6feff;
+font-size:23px;
+font-weight:900;
+letter-spacing:2px;
+text-shadow:
+0 0 8px #fff,
+0 0 18px #22cfff;
+}
+
+.ring{
+position:absolute;
+top:50%;
+left:50%;
+border-radius:50%;
+pointer-events:none;
+}
+
+.ring-1{
+width:160px;
+height:160px;
+margin:-80px;
+border:2px dashed rgba(62,221,255,.88);
+animation:rotateRing 8s linear infinite;
+}
+
+.ring-2{
+width:190px;
+height:190px;
+margin:-95px;
+border:3px solid rgba(0,154,255,.65);
+border-left-color:transparent;
+border-right-color:#32e7ff;
+animation:rotateRingReverse 6s linear infinite;
+}
+
+.ring-3{
+width:216px;
+height:216px;
+margin:-108px;
+border:2px solid rgba(0,183,255,.55);
+border-top-color:#6df4ff;
+border-bottom-color:transparent;
+box-shadow:0 0 18px rgba(0,170,255,.5);
+animation:rotateRing 12s linear infinite;
+}
+
+.voice-wave{
+width:120px;
+height:90px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:5px;
+opacity:.28;
+}
+
+.voice-wave span{
+width:4px;
+height:8px;
+border-radius:999px;
+background:#27dfff;
+box-shadow:0 0 9px #0baeff;
+}
+
+.galileo-state{
+text-align:center;
+min-height:24px;
+color:#8ddfff;
+font-weight:700;
+}
+
+/* ESTADOS */
+
+.galileo-hud.listening .galileo-core{
+animation:listeningPulse .75s ease-in-out infinite;
+box-shadow:
+0 0 18px #33eeff,
+0 0 50px #078dff;
+}
+
+.galileo-hud.listening .voice-wave{
+opacity:.9;
+}
+
+.galileo-hud.listening .voice-wave span{
+animation:soundBar .65s ease-in-out infinite alternate;
+}
+
+.galileo-hud.thinking .ring-1{
+animation-duration:.75s;
+}
+
+.galileo-hud.thinking .ring-2{
+animation-duration:1s;
+}
+
+.galileo-hud.thinking .ring-3{
+animation-duration:1.35s;
+}
+
+.galileo-hud.speaking .voice-wave{
+opacity:1;
+}
+
+.galileo-hud.speaking .voice-wave span{
+animation:soundBar .5s ease-in-out infinite alternate;
+}
+
+.voice-wave span:nth-child(2){
+animation-delay:.08s;
+}
+
+.voice-wave span:nth-child(3){
+animation-delay:.16s;
+}
+
+.voice-wave span:nth-child(4){
+animation-delay:.24s;
+}
+
+.voice-wave span:nth-child(5){
+animation-delay:.12s;
+}
+
+.voice-wave span:nth-child(6){
+animation-delay:.30s;
+}
+
+.galileo-hud.speaking .galileo-core{
+animation:voicePulse .48s ease-in-out infinite alternate;
+}
+
+/* MODOS */
+
+.learning-modes{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px;
+margin:14px 0;
+}
+
+.mode-button{
+background:rgba(14,94,161,.28);
+border:1px solid rgba(44,210,255,.24);
+color:#dff9ff;
+padding:12px 8px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+}
+
+.mode-button.active{
+background:#0d8bc7;
+box-shadow:0 0 18px rgba(0,191,255,.35);
+}
+
+.mode-description{
+text-align:center;
+color:#88b7cf;
+margin:8px 0 16px;
+}
+
+.activity-area{
+border:1px solid rgba(62,207,255,.18);
+background:rgba(0,20,38,.62);
+border-radius:16px;
+padding:16px;
+margin-bottom:16px;
+}
+
+/* CHAT */
+
+#chat{
+border:1px solid rgba(81,197,255,.18);
+background:rgba(2,10,20,.72);
+border-radius:16px;
+height:40vh;
+min-height:280px;
+overflow:auto;
+padding:15px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.bubble{
+max-width:88%;
+padding:13px 16px;
+border-radius:16px;
+line-height:1.55;
+white-space:pre-wrap;
+}
+
+.bot{
+align-self:flex-start;
+background:rgba(12,92,153,.38);
+}
+
+.student{
+align-self:flex-end;
+background:rgba(16,132,100,.34);
+}
+
+/* FORM */
+
+form{
+margin-top:16px;
+}
+
+form label{
+font-size:13px;
+color:#8eb5cf;
+}
+
+.input-row{
+display:flex;
+gap:8px;
+margin-top:6px;
+}
+
+#message{
+min-width:0;
+flex:1;
+border:1px solid rgba(68,200,255,.28);
+border-radius:12px;
+padding:13px;
+font-size:16px;
+color:#eefbff;
+background:#061426;
+outline:none;
+}
+
+button{
+cursor:pointer;
+border:0;
+border-radius:11px;
+background:#146dc7;
+color:white;
+padding:12px 15px;
+font-weight:700;
+}
+
+.controls{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:12px;
+}
+
+.voice-option{
+color:#a6c6d8;
+}
+
+#status{
+text-align:center;
+font-size:13px;
+color:#7eb6d2;
+min-height:20px;
+}
+
+footer{
+text-align:center;
+font-size:12px;
+color:#63849b;
+margin-top:12px;
+}
+
+/* ANIMACIONES */
+
+@keyframes rotateRing{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+@keyframes rotateRingReverse{
+from{transform:rotate(360deg);}
+to{transform:rotate(0deg);}
+}
+
+@keyframes soundBar{
+from{
+height:8px;
+opacity:.45;
+}
+to{
+height:58px;
+opacity:1;
+}
+}
+
+@keyframes voicePulse{
+from{transform:scale(.97);}
+to{transform:scale(1.055);}
+}
+
+@keyframes listeningPulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.065);}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:760px){
+
+.learning-modes{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:650px){
+
+main{
+width:100%;
+min-height:100dvh;
+margin:0;
+border-radius:0;
+padding:16px;
+}
+
+.galileo-hud{
+gap:2px;
+min-height:210px;
+}
+
+.galileo-orb{
+width:180px;
+height:180px;
+min-width:180px;
+}
+
+.galileo-core{
+inset:40px;
+}
+
+.ring-1{
+width:132px;
+height:132px;
+margin:-66px;
+}
+
+.ring-2{
+width:156px;
+height:156px;
+margin:-78px;
+}
+
+.ring-3{
+width:178px;
+height:178px;
+margin:-89px;
+}
+
+.galileo-name{
+font-size:18px;
+}
+
+.voice-wave{
+width:54px;
+}
+
+#chat{
+height:36dvh;
+}
+
+}

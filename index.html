@@ -1,1 +1,299 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Galileo IA 2.0 · Física</title><link rel="stylesheet" href="/style.css"></head><body><main><header><div class="brand">✦ Galileo <span>IA</span></div><p>Tu tutor de Física: pregunta a tu manera.</p></header><section class="topics"><button data-example="Explícame MRU usando unicornios">🦄 Unicornios</button><button data-example="Explícame MRU con una analogía del Hombre Araña">🕸️ Superhéroes</button><button data-example="No entiendo qué es la velocidad, explícame desde cero">💡 Desde cero</button></section><section id="chat" role="log" aria-label="Conversación" aria-live="polite"><div class="bubble bot">¡Hola! Soy Galileo. Podemos aprender MRU con unicornios, superhéroes o lo que más te guste. ¿Qué te gustaría entender hoy?</div></section><form id="form"><label for="message">Tu pregunta</label><div class="input-row"><input id="message" maxlength="2000" placeholder="Pregúntame lo que quieras sobre Física..." required autocomplete="off"><button id="send" type="submit">Enviar</button></div></form><div class="controls"><button id="mic" type="button" aria-label="Hablar por micrófono">🎤 Hablar</button><button id="stop" type="button">■ Detener voz</button><label><input type="checkbox" id="speak" checked> Respuestas habladas</label></div><p id="status" role="status"></p><footer>Prototipo educativo. La IA puede equivocarse. No compartas datos personales.</footer></main><script src="/app.js"></script></body></html>
+<!doctype html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<meta
+name="theme-color"
+content="#020814">
+
+<title>Galileo IA · Tutor de Física</title>
+
+<link
+rel="stylesheet"
+href="/style.css?v=40">
+
+</head>
+
+
+<body>
+
+<main>
+
+<header>
+
+<div class="brand">
+GALILEO <span>IA</span>
+</div>
+
+<p class="subtitle">
+Tutor socrático inteligente de Física y MRU
+</p>
+
+</header>
+
+
+<!-- =========================
+     NÚCLEO GALILEO
+========================= -->
+
+<section
+class="galileo-hud"
+id="galileoHud">
+
+<div class="voice-wave">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+<button
+id="galileoOrb"
+class="galileo-orb"
+type="button"
+aria-label="Hablar con Galileo">
+
+<span class="ring ring-1"></span>
+<span class="ring ring-2"></span>
+<span class="ring ring-3"></span>
+
+<span class="galileo-core">
+
+<span class="galileo-name">
+GALILEO
+</span>
+
+</span>
+
+</button>
+
+
+<div class="voice-wave">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+</section>
+
+
+<p
+id="galileoState"
+class="galileo-state">
+
+Toca GALILEO para hablar
+
+</p>
+
+
+<!-- =========================
+     MODOS DE APRENDIZAJE
+========================= -->
+
+<section class="learning-modes">
+
+<button
+type="button"
+data-mode="tutor"
+class="mode-button active">
+
+💬 Tutor
+
+</button>
+
+
+<button
+type="button"
+data-mode="quiz"
+class="mode-button">
+
+🧠 Quiz
+
+</button>
+
+
+<button
+type="button"
+data-mode="simulation"
+class="mode-button">
+
+🚗 Simulador
+
+</button>
+
+
+<button
+type="button"
+data-mode="game"
+class="mode-button">
+
+🎮 Juego
+
+</button>
+
+
+<button
+type="button"
+data-mode="animation"
+class="mode-button">
+
+🎬 Animación
+
+</button>
+
+</section>
+
+
+<p
+id="modeDescription"
+class="mode-description">
+
+Conversemos. Galileo te ayudará a descubrir las respuestas paso a paso.
+
+</p>
+
+
+<!-- =========================
+     ÁREA DE ACTIVIDADES
+========================= -->
+
+<section
+id="activityArea"
+class="activity-area"
+hidden>
+
+</section>
+
+
+<!-- =========================
+     CONVERSACIÓN
+========================= -->
+
+<section
+id="chat"
+role="log"
+aria-label="Conversación con Galileo"
+aria-live="polite">
+
+<div class="bubble bot">
+
+¡Hola! Soy Galileo.
+
+Puedo ayudarte a aprender MRU mediante preguntas, ejemplos, quizzes,
+simulaciones, juegos y animaciones.
+
+Toca mi núcleo para hablar conmigo o escribe tu pregunta.
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     ENTRADA DE TEXTO
+========================= -->
+
+<form id="form">
+
+<label for="message">
+
+Tu pregunta
+
+</label>
+
+
+<div class="input-row">
+
+<input
+id="message"
+maxlength="2000"
+placeholder="Pregúntale algo a Galileo..."
+required
+autocomplete="off">
+
+
+<button
+id="send"
+type="submit">
+
+Enviar
+
+</button>
+
+</div>
+
+</form>
+
+
+<!-- =========================
+     CONTROLES
+========================= -->
+
+<div class="controls">
+
+<button
+id="stop"
+type="button">
+
+■ Detener voz
+
+</button>
+
+
+<label class="voice-option">
+
+<input
+type="checkbox"
+id="speak"
+checked>
+
+Respuestas habladas
+
+</label>
+
+</div>
+
+
+<p
+id="status"
+role="status">
+
+Galileo está listo.
+
+</p>
+
+
+<footer>
+
+Galileo IA es un recurso educativo.
+La inteligencia artificial puede cometer errores.
+
+</footer>
+
+
+</main>
+
+
+<script src="/app.js?v=40"></script>
+
+</body>
+
+</html>
